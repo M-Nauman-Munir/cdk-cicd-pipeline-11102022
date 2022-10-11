@@ -1,16 +1,17 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as awsCodePipeline from 'aws-cdk-lib/pipelines';
 
 export class CdkCicdPipeline11102022Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'CdkCicdPipeline11102022Queue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new awsCodePipeline.CodePipeline(this, 'AWS-Code-Pipeline', {
+      pipelineName: 'test-code-pipeline',
+      synth: new awsCodePipeline.ShellStep('Synth', {
+        input: awsCodePipeline.CodePipelineSource.gitHub('M-Nauman-Munir/cdk-cicd-pipeline-11102022', 'main'),
+        commands: ['npm ci', 'npm run build', 'npx cdk synth']
+      })
+    })
   }
 }
