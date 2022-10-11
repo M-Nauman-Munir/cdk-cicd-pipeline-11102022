@@ -9,7 +9,7 @@ export class CdkCicdPipeline11102022Stack extends cdk.Stack {
     new awsCodePipeline.CodePipeline(this, 'AWS-Code-Pipeline', {
       pipelineName: 'test-code-pipeline',
       synth: new awsCodePipeline.ShellStep('Synth', {
-        input: awsCodePipeline.CodePipelineSource.gitHub('M-Nauman-Munir/cdk-cicd-pipeline-11102022', 'main'),
+        input: awsCodePipeline.CodePipelineSource.gitHub('M-Nauman-Munir/cdk-cicd-pipeline-11102022', 'master'),
         commands: ['npm ci', 'npm run build', 'npx cdk synth']
       })
     })
